@@ -7,12 +7,16 @@ import theme from './theme/theme';
 
 import { Router } from './router/Router';
 import { AccountUserPrivider } from './providers/AccountUserProvider';
+import { AccountDataPrivider } from './providers/AccountDataProvider';
+
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <AccountUserPrivider>   
-        <Router />
+      <AccountUserPrivider>
+        <AccountDataPrivider>
+          <Router />
+        </AccountDataPrivider> 
       </AccountUserPrivider>
     </ChakraProvider>
   );

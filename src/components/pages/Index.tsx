@@ -1,5 +1,5 @@
 import { memo, ReactNode, useContext, useEffect, useState, VFC } from "react";
-import { Header } from "../organisms/layout/Header";
+import { useNavigate } from "react-router-dom";
 
 import { Box, Button, Center, Grid, Link,
   Modal,
@@ -13,11 +13,19 @@ import { Box, Button, Center, Grid, Link,
   FormControl,
   FormLabel,
   Input,
-  FormHelperText, } from '@chakra-ui/react'
+  } from '@chakra-ui/react';
+
+
+import { Header } from "../organisms/layout/Header";
 import { PhotoCard } from "../organisms/user/PhotoCard";
-import { useAccountData } from "../../hooks/useAccountData";
+
 import { AccountUserContext, AccountUserContextType } from "../../providers/AccountUserProvider";
-import { useNavigate } from "react-router-dom";
+import { AccountDataContext, AccountDataContextType } from "../../providers/AccountDataProvider";
+
+import { useAccountData } from "../../hooks/useAccountData";
+import { TargetMediaData } from "../../types/api/acount";
+
+
 
 // type Props = {
 //   children: ReactNode;
@@ -31,14 +39,16 @@ export const Index: VFC = memo(() => {
   // モーダル用
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const { accountUser, setAccountUser } = useContext<AccountUserContextType>(AccountUserContext)
+  const { accountUser } = useContext<AccountUserContextType>(AccountUserContext);
+  const { accountData } = useContext<AccountDataContextType>(AccountDataContext);
   
-  const { getAccountData, accountData } = useAccountData()
+  const { getAccountData } = useAccountData();
   useEffect(() => {
     getAccountData(accountUser?.username)
-  }, [])
+  }, []);
 
-
+  // グローバルにステート管理 accountUserを参照
+  console.log({accountUser});
 
   
   return (
@@ -82,7 +92,7 @@ export const Index: VFC = memo(() => {
           p={[0, "20px"]} 
           borderTop="2px" borderColor="gray.200"
         >
-          {accountData.business_discovery.media.data.map((postData) => (
+          {accountData?.business_discovery.media.data.map((postData:TargetMediaData) => (
             <Link 
               key={postData.id} 
               onClick={() => navigate(`/detail?id=${postData.id}`)}

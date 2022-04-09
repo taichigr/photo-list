@@ -7,17 +7,23 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useContext, useEffect } from "react"
 import { TargetMediaData } from "../../types/api/acount"
 import { AccountUserContext, AccountUserContextType } from "../../providers/AccountUserProvider"
+import { AccountDataContext, AccountDataContextType } from "../../providers/AccountDataProvider"
 
 
 export const Detail = () => {
   const navigate = useNavigate()
-  const { accountUser, setAccountUser } = useContext<AccountUserContextType>(AccountUserContext)
-  console.log(accountUser)
-  const { getAccountData, accountData } = useAccountData();
+  const { accountUser } = useContext<AccountUserContextType>(AccountUserContext);
+  console.log(accountUser);
+
+  const { accountData } = useContext<AccountDataContextType>(AccountDataContext);
+  const { getAccountData } = useAccountData();
+  useEffect(() => {
+    getAccountData(accountUser?.username)
+  }, []);
   useEffect(() => getAccountData(accountUser?.username), []);
   const search = useLocation().search;
   const query = new URLSearchParams(search);
-  const targetData: TargetMediaData | undefined = accountData.business_discovery.media.data.find(account => account.id === query.get('id'))
+  const targetData: TargetMediaData | undefined = accountData?.business_discovery.media.data.find(account => account.id === query.get('id'))
 
   console.log(targetData)
   return (

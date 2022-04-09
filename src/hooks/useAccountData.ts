@@ -1,37 +1,47 @@
 import axios from "axios"
-import { useCallback, useState } from "react"
+import React, { useCallback, useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
+import { TargetAccountData, TargetMediaData } from "../types/api/acount";
+import { AccountDataContext, AccountDataContextType } from "../providers/AccountDataProvider";
 
-import { TargetAccountData, TargetMediaData } from "../types/api/acount"
+// const { getAccountData, accountData } = useAccountData();
+// useEffect(() => {
+//   getAccountData(accountUser?.username)
+// }, []);
 
 const { REACT_APP_INSTAGRAM_BUSINESSACCOUNT, REACT_APP_ACCESS_TOKEN } = process.env;
 
 export const useAccountData = () => {
-  const navigate = useNavigate()
-  const [accountData, setAccountData] = useState<TargetAccountData>({
-    business_discovery: {
-      id: '',
-      followers_count: 0,
-      media_count: 0,
-      ig_id: 0,
-      media: {
-        data: [
-          {
-            caption: "",
-            media_url: "",
-            media_type: "",
-            like_count: 0,
-            comments_count: 0,
-            timestamp: "",
-            thumbnail_url: "",
-            id: "",
-          }
-        ]
-      }
-    },
-    id: ""
-  });
+  const navigate = useNavigate();
+
+  const { accountData, setAccountData } = useContext<AccountDataContextType>(AccountDataContext);
+
+
+
+  // const [accountData, setAccountData] = useState<TargetAccountData>({
+  //   business_discovery: {
+  //     id: '',
+  //     followers_count: 0,
+  //     media_count: 0,
+  //     ig_id: 0,
+  //     media: {
+  //       data: [
+  //         {
+  //           caption: "",
+  //           media_url: "",
+  //           media_type: "",
+  //           like_count: 0,
+  //           comments_count: 0,
+  //           timestamp: "",
+  //           thumbnail_url: "",
+  //           id: "",
+  //         }
+  //       ]
+  //     }
+  //   },
+  //   id: ""
+  // });
   const getAccountData = useCallback((username) => {
     const instagramBusinessAccount = REACT_APP_INSTAGRAM_BUSINESSACCOUNT
     const targetAccountName = username
@@ -48,5 +58,5 @@ export const useAccountData = () => {
   // const addPhoto = useCallback(() => {
   //   const 
   // }, [])
-  return { getAccountData, accountData }
+  return { getAccountData }
 }

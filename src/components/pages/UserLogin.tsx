@@ -7,16 +7,17 @@ import { useNavigate } from "react-router-dom"
 export const UserLogin = () => {
   const navigate = useNavigate();
 
-  const { accountUser, setAccountUser } = useContext<AccountUserContextType>(AccountUserContext)
-  const [username, setUsername] = useState('');
+  const { accountUser, setAccountUser } = useContext<AccountUserContextType>(AccountUserContext);
+  console.log(accountUser);
+  const [inputname, setInputname] = useState('');
   const [isComposed, setIsComposed] = useState(false);
 
 
-  const onChangeInput = (event:any) => setUsername(event.target.value);
-  console.log(username);
+  const onChangeInput = (event:any) => setInputname(event.target.value);
+  console.log(accountUser?.username);
   const onClickAddUsername = () => {
-    if(username === "") return
-    setAccountUser({username: username});
+    if(accountUser?.username === "") return;
+    setAccountUser({username: inputname});
     navigate('/');
   }
   return (
@@ -53,13 +54,13 @@ export const UserLogin = () => {
               const uName = e.target.value;
               if(uName === "") return;
               if(e.key === 'Enter') {
-                setAccountUser({username: username});
+                setAccountUser({username: inputname});
                 navigate('/');
-                setUsername('');
+                setInputname('');
                 e.preventDefault();
               }
             }}
-            value={username}
+            value={inputname}
           />
           <Button onClick={onClickAddUsername}>送信</Button>
           <FormHelperText>
