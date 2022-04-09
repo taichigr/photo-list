@@ -18,30 +18,6 @@ export const useAccountData = () => {
   const { accountData, setAccountData } = useContext<AccountDataContextType>(AccountDataContext);
 
 
-
-  // const [accountData, setAccountData] = useState<TargetAccountData>({
-  //   business_discovery: {
-  //     id: '',
-  //     followers_count: 0,
-  //     media_count: 0,
-  //     ig_id: 0,
-  //     media: {
-  //       data: [
-  //         {
-  //           caption: "",
-  //           media_url: "",
-  //           media_type: "",
-  //           like_count: 0,
-  //           comments_count: 0,
-  //           timestamp: "",
-  //           thumbnail_url: "",
-  //           id: "",
-  //         }
-  //       ]
-  //     }
-  //   },
-  //   id: ""
-  // });
   const getAccountData = useCallback((username) => {
     const instagramBusinessAccount = REACT_APP_INSTAGRAM_BUSINESSACCOUNT
     const targetAccountName = username
