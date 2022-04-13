@@ -26,7 +26,6 @@ type Props = {
   children: ReactNode
 }
 
-// TODO データの受け取り管理がうまいこと言っていない！
 export const AccountUserPrivider: FC<Props> = (props) => {
   const { children } = props;
   const [ accountUser, setAccountUser ] = useState<AccountUser>({username: ""});

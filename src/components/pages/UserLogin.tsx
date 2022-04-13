@@ -1,5 +1,5 @@
 import { Box, Button, FormControl, FormHelperText, FormLabel, Input, Stack } from "@chakra-ui/react"
-import React,{ KeyboardEvent, useContext, useState } from "react"
+import React,{ ChangeEvent, KeyboardEvent, useContext, useState } from "react"
 import { Header } from "../organisms/layout/Header"
 import { AccountUserContextType, AccountUserContext } from "../../providers/AccountUserProvider"
 import { useNavigate } from "react-router-dom"
@@ -13,12 +13,28 @@ export const UserLogin = () => {
   const [isComposed, setIsComposed] = useState(false);
 
 
-  const onChangeInput = (event:any) => setInputname(event.target.value);
+  const onChangeInput = (event: ChangeEvent<HTMLInputElement> ) => setInputname(event.target.value);
   console.log(accountUser?.username);
   const onClickAddUsername = () => {
-    if(accountUser?.username === "") return;
+    console.log('発火')
+    if(inputname === "") return;
     setAccountUser({username: inputname});
     navigate('/');
+  }
+
+  const onKeyDownEnter = (e:KeyboardEvent) => {
+    if(isComposed) return;
+    if (!(e.target instanceof HTMLInputElement)) {
+      return;
+    }
+    const uName = e.target.value;
+    if(uName === "") return;
+    if(e.key === 'Enter') {
+      setAccountUser({username: inputname});
+      navigate('/');
+      setInputname('');
+      e.preventDefault();
+    }
   }
   return (
     <>
@@ -46,20 +62,7 @@ export const UserLogin = () => {
             onChange={onChangeInput} 
             onCompositionStart={() => { setIsComposed(true) }}
             onCompositionEnd={() => { setIsComposed(false) }}
-            onKeyDown={(e:KeyboardEvent) => {
-              if(isComposed) return;
-              if (!(e.target instanceof HTMLInputElement)) {
-                return;
-              }
-              const uName = e.target.value;
-              if(uName === "") return;
-              if(e.key === 'Enter') {
-                setAccountUser({username: inputname});
-                navigate('/');
-                setInputname('');
-                e.preventDefault();
-              }
-            }}
+            onKeyDown={onKeyDownEnter}
             value={inputname}
           />
           <Button onClick={onClickAddUsername}>送信</Button>

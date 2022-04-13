@@ -23,8 +23,15 @@ export const useAccountData = () => {
     const targetAccountName = username
     const accessToken = REACT_APP_ACCESS_TOKEN
 
+    // thumbnail_urlをとってこれない
+    const getAccountDataUrl = `https://graph.facebook.com/v12.0/${instagramBusinessAccount}?fields=business_discovery.username(${targetAccountName}){id,followers_count,media_count,ig_id,media{caption,media_url,media_type,like_count,comments_count,timestamp,id}}&access_token=${accessToken}`;
+
+    console.log(getAccountDataUrl)
+
+
+
     axios
-      .get<TargetAccountData>(`https://graph.facebook.com/v12.0/${instagramBusinessAccount}?fields=business_discovery.username(${targetAccountName}){id,followers_count,media_count,ig_id,media{caption,media_url,media_type,like_count,comments_count,timestamp,id}}&access_token=${accessToken}`)
+      .get<TargetAccountData>(getAccountDataUrl)
       .then((res) => {
         setAccountData(res.data)
         console.log(res.data)

@@ -13,9 +13,14 @@ import { AccountDataContext, AccountDataContextType } from "../../providers/Acco
 export const Detail = () => {
   const navigate = useNavigate()
   const { accountUser } = useContext<AccountUserContextType>(AccountUserContext);
-  console.log(accountUser);
-
   const { accountData } = useContext<AccountDataContextType>(AccountDataContext);
+
+  console.log(accountUser);
+  console.log(accountData);
+
+
+
+
   const { getAccountData } = useAccountData();
   useEffect(() => {
     getAccountData(accountUser?.username)

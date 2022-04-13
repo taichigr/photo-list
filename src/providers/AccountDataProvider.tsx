@@ -3,12 +3,6 @@ import { TargetAccountData } from "../types/api/acount";
 
 
 export const AccountDataContext = createContext({} as AccountDataContextType);
-// type LoginUser = User & { isAdmin: boolean };
-
-// export type LoginUserContextType = {
-//   loginUser: LoginUser | null;
-//   setLoginUser: Dispatch<SetStateAction<LoginUser | null>>;
-// };
 
 export type AccountDataContextType = {
   accountData: TargetAccountData | null;
@@ -70,6 +64,8 @@ export const AccountDataPrivider: FC<Props> = (props) => {
   // useEffect(() => {
   //   setAccountData({username: '太郎'})
   // },[]);
+
+  console.log(accountData);
 
   return (
     <AccountDataContext.Provider value={{ accountData, setAccountData }}>
